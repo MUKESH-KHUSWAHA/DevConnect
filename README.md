@@ -1,15 +1,3 @@
-Here is a highly professional, visually stunning, and **animated GitHub README** tailored for **DevConnect**.
-
-It uses dynamic SVGs, typewriter effects, animated badges, sleek layout structures, and clean formatting to make your repository stand out to recruiters and open-source contributors.
-
----
-
-### 📋 How to use this:
-
-1. Copy the code block below.
-2. Paste it directly into your `README.md` file on GitHub.
-
-```markdown
 <div align="center">
 
 # 🚀 DevConnect
