@@ -4,15 +4,10 @@
 
 ### A High-Performance, Animated Full-Stack Social Networking Platform for Developers
 
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&pause=1000&color=3b82f6&center=true&vCenter=true&width=500&lines=Connect+With+Developers+🌐;Share+Code+Snippets+💻;AI-Powered+Code+Reviews+🤖;Real-Time+Chatting+💬" alt="Typing SVG" />
-</p>
-
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20App-blue?style=for-the-badge&logo=vercel)](https://dev-connect-4akd.vercel.app)
 [![Backend](https://img.shields.io/badge/Backend-Render-green?style=for-the-badge&logo=render)](https://devconnect-21w4.onrender.com)
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github)](https://github.com/MUKESH-KHUSWAHA/devconnect)
 
-<img src="https://res.cloudinary.com/ddsswptnz/image/upload/v1/devconnect/banner.png" width="100%" alt="DevConnect Banner" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"/>
 
 ---
 
