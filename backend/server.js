@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const http = require('http');
+const path = require('path');
 const { Server } = require('socket.io');
 
 const authRoutes = require('./routes/authRoutes');
@@ -17,13 +18,15 @@ const { setSocketInstance } = require('./controllers/socialController'); // ← 
 
 dotenv.config();
 
+const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173';
+
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: 'http://localhost:5173' }
+  cors: { origin: CLIENT_URL, credentials: true }
 });
 
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(cors({ origin: CLIENT_URL, credentials: true }));
 app.use(express.json());
 
 app.get('/', (req, res) => res.send('DevConnect backend is running'));
@@ -36,6 +39,14 @@ app.use('/api/profile', profileRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/jobs', jobRoutes);
 app.use('/api/ai', aiRoutes);
+
+if (process.env.NODE_ENV === 'production') {
+  const frontendPath = path.join(__dirname, '../frontend/dist');
+  app.use(express.static(frontendPath));
+  app.get(/^(?!\/api).*/, (req, res) => {
+    res.sendFile(path.join(frontendPath, 'index.html'));
+  });
+}
 
 const onlineUsers = new Map();
 
