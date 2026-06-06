@@ -2,6 +2,7 @@ process.on('uncaughtException', (err) => {
   console.error('Uncaught Exception:', err);
   process.exit(1);
 });
+
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
@@ -18,19 +19,47 @@ const profileRoutes = require('./routes/profileRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
 const jobRoutes = require('./routes/jobRoutes');
 const aiRoutes = require('./routes/aiRoutes');
-const { setSocketInstance } = require('./controllers/socialController'); // ← add
+const { setSocketInstance } = require('./controllers/socialController');
 
 dotenv.config();
 
-const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173';
+// ← Allow all vercel.app URLs + localhost
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (
+      !origin ||
+      origin === 'http://localhost:5173' ||
+      origin.endsWith('.vercel.app')
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+};
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: CLIENT_URL, credentials: true }
+  cors: {
+    origin: (origin, callback) => {
+      if (
+        !origin ||
+        origin === 'http://localhost:5173' ||
+        origin.endsWith('.vercel.app')
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true,
+    methods: ['GET', 'POST']
+  }
 });
 
-app.use(cors({ origin: CLIENT_URL, credentials: true }));
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get('/', (req, res) => res.send('DevConnect backend is running'));
@@ -53,8 +82,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const onlineUsers = new Map();
-
-// ← Inject socket into socialController after io is created
 setSocketInstance(io, onlineUsers);
 
 io.on('connection', (socket) => {
