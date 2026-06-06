@@ -1,3 +1,7 @@
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+  process.exit(1);
+});
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
@@ -95,4 +99,7 @@ mongoose.connect(process.env.MONGO_URI)
       console.log('Connected to MongoDB');
     });
   })
-  .catch((err) => console.log('MongoDB connection error:', err));
+  .catch((err) => {
+    console.error('startup error:', err.message);
+    process.exit(1);
+  });
