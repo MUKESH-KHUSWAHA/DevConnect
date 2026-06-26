@@ -10,6 +10,7 @@ import { BsChatDots, BsChatDotsFill, BsBriefcase, BsBriefcaseFill } from 'react-
 import { IoSearchOutline } from 'react-icons/io5';
 import { AiOutlineBell, AiFillBell } from 'react-icons/ai';
 import { MdWorkOutline } from 'react-icons/md';
+import { FiLogOut } from 'react-icons/fi';
 
 const Navbar = ({ activePage = 'home' }) => {
   const { user, logout } = useAuthStore();
@@ -186,6 +187,17 @@ const Navbar = ({ activePage = 'home' }) => {
               border
             />
           </div>
+
+          <button
+            onClick={() => {
+              logout();
+              navigate('/login');
+            }}
+            title="Logout"
+            className="text-xl text-gray-400 hover:text-red-400 transition"
+          >
+            <FiLogOut />
+          </button>
         </div>
       </div>
     </nav>

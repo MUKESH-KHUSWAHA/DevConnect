@@ -22,6 +22,22 @@ const { setSocketInstance } = require('./controllers/socialController');
 
 dotenv.config();
 
+// Startup validation — ensure critical env vars are present
+if (!process.env.JWT_SECRET) {
+  console.error('======================================================');
+  console.error('FATAL: JWT_SECRET is not set in environment variables!');
+  console.error('All authentication will fail with 401 Unauthorized.');
+  console.error('Set JWT_SECRET in your Render environment variables.');
+  console.error('======================================================');
+  process.exit(1);
+}
+
+if (!process.env.MONGO_URI) {
+  console.error('FATAL: MONGO_URI is not set in environment variables!');
+  process.exit(1);
+}
+
+
 // ← Allow all vercel.app URLs + localhost
 const corsOptions = {
   origin: (origin, callback) => {
